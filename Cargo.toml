@@ -1,0 +1,5 @@
+[package]
+
+name = "rebar"
+version = "0.0.1"
+authors = ["James Hannah <jhannah8124@gmail.com>"]
