@@ -1,4 +1,4 @@
-#![feature(old_io)]
+#![feature(collections)]
 extern crate term;
 
 use std::string::String;
