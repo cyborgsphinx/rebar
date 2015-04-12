@@ -1,4 +1,3 @@
-#![feature(convert)]
 extern crate rebar;
 
 use std::io;
