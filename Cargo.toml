@@ -2,8 +2,8 @@
 
 name = "rebar"
 description = "A line editor built from scratch in Rust"
-homepage = "github.com/cyborgsphinx/rebar"
-repository = "github.com/cyborgsphinx/rebar"
+homepage = "https://github.com/cyborgsphinx/rebar"
+repository = "https://github.com/cyborgsphinx/rebar"
 readme = "README.md"
 keywords = ["shell", "term"]
 license = "MIT"
