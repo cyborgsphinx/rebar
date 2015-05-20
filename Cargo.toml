@@ -13,3 +13,4 @@ authors = ["James Hannah <jhannah8124@gmail.com>"]
 [dependencies]
 
 term = "*"
+termios = "0.1.0"

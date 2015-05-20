@@ -1,7 +1,14 @@
-#![feature(collections)]
 extern crate term;
+extern crate termios;
 
+use termios::Termios;
 use std::string::String;
+
+pub struct Rebar {
+    termio: Termios,
+    clear: String,
+    buf: String,
+}
 
 ///Clears the screen using terminfo-based clear string
 pub fn clear() {
@@ -22,7 +29,8 @@ pub fn clear() {
 
 ///Refresh the line, so that you can move cursors and shit
 pub fn refresh_screen(inline: &str) {
-    let mut line = String::from_str("\r");
+    let mut line = String::new();
+    line.push_str("\r");
     line.push_str(inline);
     print!("{}", line);
 }
