@@ -1,13 +1,42 @@
 extern crate term;
 extern crate termios;
 
+use term::terminfo::TermInfo;
 use termios::Termios;
 use std::string::String;
+use std::io::{stdin, Stdin, stdout, Stdout, stderr, Stderr};
 
 pub struct Rebar {
+    i: Stdin,   //stdin handle
+    o: Stdout,  //stdout handle
+    e: Stderr,  //stderr handle
     termio: Termios,
-    clear: String,
+    terms: TermInfo,
+    prompt: String,
     buf: String,
+    cursor_pos: usize,
+}
+
+pub fn rebar() -> Rebar {
+    let info = match TermInfo::from_env() {
+        Ok(s) => s,
+        Err(f) => panic!(f),
+    };
+    let ios = match Termios::from_fd(0) {
+        Ok(s) => s,
+        Err(f) => panic!(f),
+    };
+    let res = Rebar {
+        i: stdin(),
+        o: stdout(),
+        e: stderr(),
+        termio: ios,
+        terms: info,
+        prompt: String::new(),
+        buf: String::new(),
+        cursor_pos: 0
+    };
+    res
 }
 
 ///Clears the screen using terminfo-based clear string
