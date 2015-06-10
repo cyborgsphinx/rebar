@@ -7,7 +7,6 @@ use std::string::String;
 use std::io::{stdin, Stdin, stdout, Stdout, stderr, Stderr};
 
 /// Holds the state for the line editor
-#[derive(Clone, PartialEq, Debug)]
 pub struct Rebar {
     i: Stdin,   //stdin handle
     o: Stdout,  //stdout handle
