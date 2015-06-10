@@ -6,6 +6,8 @@ use termios::Termios;
 use std::string::String;
 use std::io::{stdin, Stdin, stdout, Stdout, stderr, Stderr};
 
+/// Holds the state for the line editor
+#[derive(Clone, PertialEq, Debug)]
 pub struct Rebar {
     i: Stdin,   //stdin handle
     o: Stdout,  //stdout handle
@@ -17,6 +19,7 @@ pub struct Rebar {
     cursor_pos: usize,
 }
 
+/// Initialisation function
 pub fn rebar() -> Rebar {
     let info = match TermInfo::from_env() {
         Ok(s) => s,
