@@ -70,7 +70,7 @@ pub fn refresh_screen(inline: &str) {
 #[test]
 fn init_rebar() {
     let reb = rebar();
-    reb.prompt.push("$");
+    reb.prompt.push('$');
     reb.cursor_pos += 1;
 }
 
