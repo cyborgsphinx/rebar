@@ -66,7 +66,20 @@ pub fn refresh_screen(inline: &str) {
     print!("{}", line);
 }
 
+
+#[test]
+fn init_rebar() {
+    let reb = rebar();
+    reb.prompt.push("$");
+    reb.cursor_pos += 1;
+}
+
 #[test]
 fn clear_screen() {
     clear();
+}
+
+#[test]
+fn refresh() {
+    refresh_screen("");
 }
