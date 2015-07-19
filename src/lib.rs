@@ -4,22 +4,13 @@ extern crate termios;
 use term::terminfo::TermInfo;
 use termios::Termios;
 use std::string::String;
-use std::io::{stdin, Stdin, stdout, Stdout, stderr, Stderr};
+//use std::io::{stdin, Stdin, stdout, Stdout, stderr, Stderr};
 
-/// Holds the state for the line editor
-pub struct Rebar {
-    i: Stdin,   //stdin handle
-    o: Stdout,  //stdout handle
-    e: Stderr,  //stderr handle
-    termio: Termios,
-    terms: TermInfo,
-    prompt: String,
-    buf: String,
-    cursor_pos: usize,
-}
+pub mod rebar;
+use rebar::Rebar;
 
 /// Initialisation function
-pub fn rebar() -> Rebar {
+pub fn init() -> Rebar {
     let info = match TermInfo::from_env() {
         Ok(s) => s,
         Err(f) => panic!(f),
@@ -28,34 +19,12 @@ pub fn rebar() -> Rebar {
         Ok(s) => s,
         Err(f) => panic!(f),
     };
-    let res = Rebar {
-        i: stdin(),
-        o: stdout(),
-        e: stderr(),
-        termio: ios,
-        terms: info,
-        prompt: String::new(),
-        buf: String::new(),
-        cursor_pos: 0
-    };
-    res
+    Rebar::from_term(ios, info)
 }
 
 ///Clears the screen using terminfo-based clear string
-pub fn clear() {
-    let info = term::terminfo::TermInfo::from_env();
-
-    let fred = match info {
-        Ok(val) => val,
-        Err(f) => panic!(f.to_string()),
-    };
-
-    let clear = fred.strings.get("clear").unwrap();
-    let mut derf = term::stdout().unwrap();
-    match derf.write_all(clear) {
-        Ok(..) => {},
-        Err(f) => println!("Failed to clear: {}", f),
-    };
+pub fn clear(reb: &mut Rebar) {
+    reb.clear_screen();
 }
 
 ///Refresh the line, so that you can move cursors and shit
@@ -69,17 +38,19 @@ pub fn refresh_screen(inline: &str) {
 
 #[test]
 fn init_rebar() {
-    let mut reb = rebar();
+    let mut reb = init();
     reb.prompt.push('$');
     reb.cursor_pos += 1;
 }
 
 #[test]
 fn clear_screen() {
-    clear();
+    let mut reb = Rebar::new();
+    clear(&mut reb);
 }
 
 #[test]
 fn refresh() {
-    refresh_screen("");
+    print!("Hello");
+    refresh_screen("J");
 }
