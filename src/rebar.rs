@@ -8,14 +8,14 @@ use std::io::{stdin, Stdin, stdout, Stdout, stderr, Stderr, Write};
 
 /// Holds the state for the line editor
 pub struct Rebar {
-    pub i: Stdin,   //stdin handle
-    pub o: Stdout,  //stdout handle
-    pub e: Stderr,  //stderr handle
-    pub termio: Termios,
-    pub info: TermInfo,
-    pub prompt: String,
-    pub buf: String,
-    pub cursor_pos: u32,
+    i: Stdin,   //stdin handle
+    o: Stdout,  //stdout handle
+    e: Stderr,  //stderr handle
+    termio: Termios,
+    info: TermInfo,
+    prompt: String,
+    buf: String,
+    cursor_pos: u32,
 }
 
 impl Rebar {
@@ -49,5 +49,9 @@ impl Rebar {
             Ok(..) => {},
             Err(f) => println!("Failed to clear screen, {}", f),
         };
+    }
+    pub fn append(&mut self, ch: char) {
+        self.prompt.push(ch);
+        self.cursor_pos+=1;
     }
 }
